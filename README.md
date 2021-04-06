@@ -26,3 +26,24 @@ start-stop-daemon --start -b --exec /some_path/connman-mon/monitor-states.py -- 
 ```
 
 where connman_on_postconnect.sh is my custom script with actions on connect.
+
+Any custom script gets two command line arguments: connection type and
+connection name (service type and service name in terms of connman). So it can
+be used in custom script for something. Example of custom bash script:
+
+```
+#!/bin/bash
+
+connection_type="$1"
+name="$2"
+
+if [ "${connection_type}" == "wifi" ]; then
+
+    # do something, for example restart vpn service
+    # /etc/init.d/openvpn restart
+
+    if [ $name == "mywifi" ]; then
+        # do something extra
+    fi
+fi
+```
